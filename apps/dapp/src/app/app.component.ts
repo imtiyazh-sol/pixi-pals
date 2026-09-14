@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'meta-gotchi-root',
+  selector: 'pixi-pals-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

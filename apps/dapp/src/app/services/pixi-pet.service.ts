@@ -3,7 +3,7 @@ import { BehaviorSubject } from "rxjs";
 
 type State = {
   foodLevel: number;
-  sleepLevel: number;
+  restLevel: number;
   happyLevel: number;
 };
 
@@ -15,7 +15,7 @@ export class PixiPetService {
   private  animationStarted!: number|undefined;
   private _state$: BehaviorSubject<State> = new BehaviorSubject({
     foodLevel: Date.now(),
-    sleepLevel: Date.now(),
+    restLevel: Date.now(),
     happyLevel: Date.now()
   });
   public state$ = this._state$.asObservable();
@@ -45,7 +45,7 @@ export class PixiPetService {
     }
     requestAnimationFrame((t) => this.init(t));
   };
-  
+
   async actions(type: string) {
     switch (true) {
       case type === 'feed':
@@ -58,13 +58,13 @@ export class PixiPetService {
           })
         }
         break;
-      case type === 'sleep':
-        // only update if sleepLevel is less than current timestamp
-        if ( this._state$.value.sleepLevel < Date.now() ) {
-          const sleepLevel = this._state$.value.sleepLevel + 1000000;
+      case type === 'rest':
+        // only update if restLevel is less than current timestamp
+        if ( this._state$.value.restLevel < Date.now() ) {
+          const restLevel = this._state$.value.restLevel + 1000000;
           this._state$.next({
             ...this._state$.value,
-            sleepLevel: sleepLevel < Date.now() ? sleepLevel : Date.now()
+            restLevel: restLevel < Date.now() ? restLevel : Date.now()
           })
         }
         break;
@@ -88,7 +88,7 @@ export class PixiPetService {
   private _drain() {
     this._state$.next({
       foodLevel: this._state$.value.foodLevel - 5,
-      sleepLevel: this._state$.value.sleepLevel - 3,
+      restLevel: this._state$.value.restLevel - 3,
       happyLevel: this._state$.value.happyLevel - 2
     });
   }

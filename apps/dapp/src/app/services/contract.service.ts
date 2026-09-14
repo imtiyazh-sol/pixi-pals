@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Contract, ContractInterface, ethers, providers, EventFilter, BigNumber } from 'ethers';
+import { Contract, ContractInterface, ethers, providers } from 'ethers';
 
 @Injectable({
   providedIn: 'root'
@@ -14,52 +14,50 @@ export class ContractService extends Contract {
     super(_address, _abi, _provider.getSigner());
   }
 
-  async mintPixiPetNFT(name: string) {
-    const value = ethers.utils.parseEther("0.001");
-    const overrides = { value };
-    const tx = await this['mint'](name, overrides);
+  async mintPet(name: string): Promise<any> {
+    const value = ethers.utils.parseEther('0.001');
+    const tx = await (this as any).adoptPet(name, { value });
     const confirm = await tx.wait();
-    // util function to get tokenId from tx
-    const getTokenid = (topic: number | bigint | ethers.utils.BytesLike | ethers.utils.Hexable) => {
+    const getTokenId = (topic: any) => {
       const hexValue = ethers.utils.hexValue(topic).toString();
       return Number(hexValue);
-    }
-    const tokenId = getTokenid(confirm.logs[0].topics[3]);
-    return {tx, confirm, tokenId};
+    };
+    const tokenId = getTokenId(confirm.logs[0].topics[3]);
+    return { tx, confirm, tokenId };
   }
 
-  async healPixiPetNFT(tokenid: string, type: string) {
-    const value = ethers.utils.parseEther("0.0001");
-    const overrides = { value };
-    const tx = await this['heal'](tokenid, type, overrides);
+  async feedPet(tokenId: string | number): Promise<any> {
+    const value = ethers.utils.parseEther('0.0001');
+    const tx = await (this as any).feed(tokenId, { value });
     await tx.wait();
     return tx;
   }
 
-  async isOwnerOf(address: string, tokenid: string) {
-    const owner = await this['ownerOf'](tokenid)
-      .catch((err: any) => false);
+  async playPet(tokenId: string | number): Promise<any> {
+    const value = ethers.utils.parseEther('0.0001');
+    const tx = await (this as any).play(tokenId, { value });
+    await tx.wait();
+    return tx;
+  }
+
+  async restPet(tokenId: string | number): Promise<any> {
+    const value = ethers.utils.parseEther('0.0001');
+    const tx = await (this as any).rest(tokenId, { value });
+    await tx.wait();
+    return tx;
+  }
+
+  async isOwnerOf(address: string, tokenId: string | number): Promise<boolean> {
+    const owner = await (this as any).ownerOf(tokenId).catch(() => false);
     return String(owner).toLowerCase() === String(address).toLowerCase();
   }
 
-  async getPixiPetNFTDetails(tokenid: number): Promise<any> {
-    console.log('getPixiPetNFTDetails', tokenid);    
-    const [foodLevel, sleepLevel, happyLevel]: BigNumber[] = await this['getTokenDetails'](tokenid);
+  async getStats(tokenId: number | string): Promise<any> {
+    const stats = await (this as any).petStats(tokenId);
     return {
-      foodLevel: foodLevel.toNumber(), 
-      sleepLevel: sleepLevel.toNumber(), 
-      happyLevel: happyLevel.toNumber()
+      foodLevel: stats.foodLevel.toNumber(),
+      restLevel: stats.sleepLevel.toNumber(),
+      happyLevel: stats.happyLevel.toNumber(),
     };
   }
-
-  // async getTokenFromAddress(address: string) {
-  //   const t: EventFilter = {
-  //     address,
-  //     topics: [],
-  //   }
-  //   const r = await this['queryFilter'](t)
-  //   console.log(r);
-  //   return r;
-  // }
-
 }

@@ -13,7 +13,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "metaGotchi",
+            "prefix": "pixiPals",
             "style": "camelCase"
           }
         ],
@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "meta-gotchi",
+            "prefix": "pixi-pals",
             "style": "kebab-case"
           }
         ]

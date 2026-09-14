@@ -5,7 +5,7 @@ import { PixiPet } from '../../pixi-pet.class';
 import { PixiPetService } from '../../services/pixi-pet.service';
 
 @Component({
-  selector: 'meta-gotchi-main',
+  selector: 'pixi-pals-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Contract, providers } from 'ethers';
 
 @Component({
-  selector: 'meta-gotchi-create',
+  selector: 'pixi-pals-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
 })
@@ -34,14 +34,14 @@ export class CreateComponent implements OnInit {
   
   async actions(type: string, payload?: any) {
     if (type === 'create') {
-      console.log('[INFO] Request Mint PixiPet NFT');
+      console.log('[INFO] Request Adopt PixiPet');
       // send request using contract service
-      const {tx, confirm, tokenId} = await this._contract['mintPixiPetNFT'](this.name);
+      const {tx, confirm, tokenId} = await this._contract['mintPet'](this.name);
       // TODO: add `tx` & `confirm` to decentralized database
       // save tokenId to database storage
       await this._database.setItem('pixiPetTokenId', tokenId);
       // request to get pixi pet details
-      const state = await this._contract['getPixiPetNFTDetails'](tokenId);
+      const state = await this._contract['getStats'](tokenId);
       // save default pixi pet details to database storage
       await this._database.setItem('STATE', state); 
       // navigate to pixi pet main page

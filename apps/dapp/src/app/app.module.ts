@@ -11,8 +11,8 @@ import { databaseFactory } from './factories/database.factory';
 import { Web3Service } from './services/web3.service';
 import { WalletSignerService } from './services/wallet-signer.service';
 import { ContractService } from './services/contract.service';
-import MetaGotchi_metadata from '../artifacts/MetaGotchi_metadata.json';
 import { providers } from 'ethers';
+import PixiPals_artifact from '../artifacts/contracts/pixi-pals.sol/PixiPals.json';
 import { PixiPetResolver } from './resolvers/pixi-pet.resolver';
 import { AuthComponent } from './components/auth/auth.component';
 import { IsAuthGuard } from './guards/is-auth.guard';
@@ -63,7 +63,7 @@ import { PixiPetGuard } from './guards/pixi-pet.guard';
   providers: [
     {
       provide: 'APP_CONTRACT_ADDRESS',
-      useValue: '0x446C29FBFEF829F81E236a2376191F648dbEF995',
+      useValue: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
     },
     // {
     //   provide: 'APP_WEB3_PROVIDER',
@@ -87,8 +87,7 @@ import { PixiPetGuard } from './guards/pixi-pet.guard';
     {
       provide: 'APP_CONTRACT_ABI',
       useFactory: () => {
-        const abi = MetaGotchi_metadata?.output?.abi;
-        return abi || [];
+        return PixiPals_artifact?.abi || [];
       },
     },
     {
@@ -119,7 +118,7 @@ import { PixiPetGuard } from './guards/pixi-pet.guard';
           console.log('[ERROR]', error);
           return {
             foodLevel: Date.now(),
-            sleepLevel: Date.now(),
+            restLevel: Date.now(),
             happyLevel: Date.now(),
           };
         }

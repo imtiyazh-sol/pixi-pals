@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { providers } from 'ethers';
 
 @Component({
-  selector: 'meta-gotchi-auth',
+  selector: 'pixi-pals-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })

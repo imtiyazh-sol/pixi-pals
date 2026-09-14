@@ -1,15 +1,15 @@
 {
-  "name": "meta-gotchi",
-  "description": "MetaGotchi Play to Earn Metaverse Game",
+  "name": "pixi-pals",
+  "description": "PixiPals Play to Earn Metaverse Game",
   "author": {
-    "name": "Nicolas Fazio",
-    "url": "https://nicolasfazio.ch"
+    "name": "PixiPals Contributors",
+    "email": ""
   },
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
-    "build": "nx build",
+    "start": "node init && nx serve",
+    "build": "node init && nx build",
     "test": "nx test",
     "postinstall": "ngcc --properties es2015 browser module main"
   },
@@ -24,6 +24,8 @@
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
     "@openzeppelin/contracts": "^4.5.0",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2",
     "rxjs": "~7.4.0",
     "three": "^0.139.2",
     "tslib": "^2.0.0",
